@@ -21,15 +21,21 @@ const client = new Client({
   ]
 });
 
-client.on('ready', () => {
+// ✅ Bot ready
+client.once('ready', () => {
   console.log(`🤖 Logged in as ${client.user.tag}`);
 });
 
+// ✅ Message handler
 client.on('messageCreate', message => {
+  if (message.author.bot) return; // لا ترد على البوتات
+
   if (message.content === '!ping') {
     message.reply('🏓 Pong!');
   }
 });
 
-// ✅ Login with your bot token
-client.login(process.env.TOKEN);
+// ✅ Login with bot token
+client.login(process.env.TOKEN).catch(err => {
+  console.error('❌ Failed to login:', err.message);
+});
