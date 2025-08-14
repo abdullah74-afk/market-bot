@@ -36,6 +36,10 @@ client.on('messageCreate', message => {
 });
 
 // ✅ Login with bot token
-client.login(process.env.TOKEN).catch(err => {
-  console.error('❌ Failed to login:', err.message);
-});
+if (!process.env.TOKEN) {
+  console.error('❌ TOKEN environment variable is missing!');
+} else {
+  client.login(process.env.TOKEN).catch(err => {
+    console.error('❌ Failed to login:', err.message);
+  });
+}
